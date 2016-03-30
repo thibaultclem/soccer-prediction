@@ -123,9 +123,10 @@ def createDataModelTable(db, deepLimit, firstDateMatch):
         elif (row[0] == 'D'): draw += 1
         elif (row[0] == 'A'): awayVictory += 1
 
+    print "League:",db
     print "Number of Home victory: ",homeVictory,"-",homeVictory/total*100,"%"
     print "Number of Away victory: ",awayVictory,"-",awayVictory/total*100,"%"
-    print "Number of Draft: ",draw,"-",draw/total*100,"%"
+    print "Number of Draw: ",draw,"-",draw/total*100,"%"
 
     ## Fill prematch table
 
@@ -155,7 +156,7 @@ def createDataModelTable(db, deepLimit, firstDateMatch):
     for match in matchs:
 
         # Get 5 previous matchs of Home Teams
-        print match
+        #print match
         cur.execute('''
             SELECT FTHG, FTR
             FROM MATCHS
@@ -215,7 +216,7 @@ def createDataModelTable(db, deepLimit, firstDateMatch):
         nbExtGoal/countExt,
         match[4], ))
         conn.commit()
-        print nbHomeVictory/countHome, nbHomeDefeat/countHome, nbHomeDraw/countHome, nbHomeGoal/countHome, nbExtVictory/countExt, nbExtDefeat/countExt, nbExtDraw/countExt, nbExtGoal/countExt, match[4]
+        #print nbHomeVictory/countHome, nbHomeDefeat/countHome, nbHomeDraw/countHome, nbHomeGoal/countHome, nbExtVictory/countExt, nbExtDefeat/countExt, nbExtDraw/countExt, nbExtGoal/countExt, match[4]
 
     conn.close()
 
@@ -281,7 +282,7 @@ def createDataPredictTable(db, deepLimit):
     for match in matchs:
 
         # Get 5 previous matchs of Home Teams
-        print match
+        #print match
         cur.execute('''
             SELECT FTHG, FTR
             FROM MATCHS
@@ -344,7 +345,7 @@ def createDataPredictTable(db, deepLimit):
         nbExtDraw/countExt,
         nbExtGoal/countExt, ))
         conn.commit()
-        print match[2], match[3], nbHomeVictory/countHome, nbHomeDefeat/countHome, nbHomeDraw/countHome, nbHomeGoal/countHome, nbExtVictory/countExt, nbExtDefeat/countExt, nbExtDraw/countExt, nbExtGoal/countExt
+        #print match[2], match[3], nbHomeVictory/countHome, nbHomeDefeat/countHome, nbHomeDraw/countHome, nbHomeGoal/countHome, nbExtVictory/countExt, nbExtDefeat/countExt, nbExtDraw/countExt, nbExtGoal/countExt
 
     conn.close()
 
