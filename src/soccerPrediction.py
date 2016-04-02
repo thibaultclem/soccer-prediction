@@ -389,3 +389,21 @@ def exportTeamsToCSV(csvOutputPath, db):
     teamsCsv.close
 
     conn.close()
+
+def createNextMatchTable(db):
+
+    # Connect to database
+    conn = sqlite3.connect(db)
+    cur = conn.cursor()
+
+    cur.execute('''
+    CREATE TABLE NEXTMATCHS (
+        MatchDate DATE,
+        DateInt DATE,
+        HomeTeam TEXT,
+        AwayTeam TEXT
+        )
+    ''')
+
+    conn.commit()
+    conn.close()

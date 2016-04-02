@@ -15,9 +15,9 @@ extractFromCsv(l1csvRawData,l1db)
 createHistoricSeasonTable(l1db)
 createDataModelTable(l1db,deepGameLimit,l1StartDate)
 exportDataModelToCsv(l1csvDataModel,l1db)
-#exportTeamsToCSV(l1Teams,l1db)
-#createDataPredictTable(l1db, deepGameLimit)
-#exportDataPredictToCsv(l1csvDataPredict,l1db)
+exportTeamsToCSV(l1Teams,l1db)
+createDataPredictTable(l1db, deepGameLimit)
+exportDataPredictToCsv(l1csvDataPredict,l1db)
 
 # French Ligue 2
 f2db = "./data/db/f2.sqlite"
@@ -31,9 +31,9 @@ extractFromCsv(f2csvRawData,f2db)
 createHistoricSeasonTable(f2db)
 createDataModelTable(f2db,deepGameLimit,f2StartDate)
 exportDataModelToCsv(f2csvDataModel,f2db)
-#exportTeamsToCSV(f2Teams,f2db)
-#createDataPredictTable(f2db, deepGameLimit)
-#exportDataPredictToCsv(f2csvDataPredict,f2db)
+exportTeamsToCSV(f2Teams,f2db)
+createDataPredictTable(f2db, deepGameLimit)
+exportDataPredictToCsv(f2csvDataPredict,f2db)
 
 
 # English Ligue 1
@@ -48,9 +48,9 @@ extractFromCsv(e0csvRawData,e0db)
 createHistoricSeasonTable(e0db)
 createDataModelTable(e0db,deepGameLimit,e0StartDate)
 exportDataModelToCsv(e0csvDataModel,e0db)
-#exportTeamsToCSV(e0Teams,e0db)
-#createDataPredictTable(e0db, deepGameLimit)
-#exportDataPredictToCsv(e0csvDataPredict,e0db)
+exportTeamsToCSV(e0Teams,e0db)
+createDataPredictTable(e0db, deepGameLimit)
+exportDataPredictToCsv(e0csvDataPredict,e0db)
 
 # English Ligue 2
 e1db = "./data/db/e1.sqlite"
@@ -64,9 +64,9 @@ extractFromCsv(e1csvRawData,e1db)
 createHistoricSeasonTable(e1db)
 createDataModelTable(e1db,deepGameLimit,e1StartDate)
 exportDataModelToCsv(e1csvDataModel,e1db)
-#exportTeamsToCSV(e1Teams,e1db)
-#createDataPredictTable(e1db, deepGameLimit)
-#exportDataPredictToCsv(e1csvDataPredict,e1db)
+exportTeamsToCSV(e1Teams,e1db)
+createDataPredictTable(e1db, deepGameLimit)
+exportDataPredictToCsv(e1csvDataPredict,e1db)
 
 
 # Italia Ligue 1
@@ -77,10 +77,10 @@ i1csvDataModel = "./data/result/i1-data-model.csv"
 i1csvDataPredict = "./data/result/i1-data-predict.csv"
 i1StartDate = "150926"
 
-extractFromCsv(i1csvRawData,i1db)
-createHistoricSeasonTable(i1db)
-createDataModelTable(i1db,deepGameLimit,i1StartDate)
-exportDataModelToCsv(i1csvDataModel,i1db)
+#extractFromCsv(i1csvRawData,i1db)
+#createHistoricSeasonTable(i1db)
+#createDataModelTable(i1db,deepGameLimit,i1StartDate)
+#exportDataModelToCsv(i1csvDataModel,i1db)
 #exportTeamsToCSV(i1Teams,i1db)
 #createDataPredictTable(i1db, deepGameLimit)
 #exportDataPredictToCsv(i1csvDataPredict,i1db)
@@ -97,9 +97,9 @@ extractFromCsv(i2csvRawData,i2db)
 createHistoricSeasonTable(i2db)
 createDataModelTable(i2db,deepGameLimit,i2StartDate)
 exportDataModelToCsv(i2csvDataModel,i2db)
-#exportTeamsToCSV(i2Teams,i2db)
-#createDataPredictTable(i2db, deepGameLimit)
-#exportDataPredictToCsv(i2csvDataPredict,i2db)
+exportTeamsToCSV(i2Teams,i2db)
+createDataPredictTable(i2db, deepGameLimit)
+exportDataPredictToCsv(i2csvDataPredict,i2db)
 
 
 # Deutch Ligue 1
@@ -114,9 +114,9 @@ extractFromCsv(d1csvRawData,d1db)
 createHistoricSeasonTable(d1db)
 createDataModelTable(d1db,deepGameLimit,d1StartDate)
 exportDataModelToCsv(d1csvDataModel,d1db)
-#exportTeamsToCSV(d1Teams,d1db)
-#createDataPredictTable(d1db, deepGameLimit)
-#exportDataPredictToCsv(d1csvDataPredict,d1db)
+exportTeamsToCSV(d1Teams,d1db)
+createDataPredictTable(d1db, deepGameLimit)
+exportDataPredictToCsv(d1csvDataPredict,d1db)
 
 # Deutch Ligue 2
 d2db = "./data/db/d2.sqlite"
@@ -130,9 +130,9 @@ extractFromCsv(d2csvRawData,d2db)
 createHistoricSeasonTable(d2db)
 createDataModelTable(d2db,deepGameLimit,d2StartDate)
 exportDataModelToCsv(d2csvDataModel,d2db)
-#exportTeamsToCSV(d2Teams,d2db)
-#createDataPredictTable(d2db, deepGameLimit)
-#exportDataPredictToCsv(d2csvDataPredict,d2db)
+exportTeamsToCSV(d2Teams,d2db)
+createDataPredictTable(d2db, deepGameLimit)
+exportDataPredictToCsv(d2csvDataPredict,d2db)
 
 
 # Spain Ligue 1
@@ -143,10 +143,10 @@ sp1csvDataModel = "./data/result/sp1-data-model.csv"
 sp1csvDataPredict = "./data/result/sp1-data-predict.csv"
 sp1StartDate = "150924"
 
-extractFromCsv(sp1csvRawData,sp1db)
-createHistoricSeasonTable(sp1db)
-createDataModelTable(sp1db,deepGameLimit,sp1StartDate)
-exportDataModelToCsv(sp1csvDataModel,sp1db)
+#extractFromCsv(sp1csvRawData,sp1db)
+#createHistoricSeasonTable(sp1db)
+#createDataModelTable(sp1db,deepGameLimit,sp1StartDate)
+#exportDataModelToCsv(sp1csvDataModel,sp1db)
 #exportTeamsToCSV(sp1Teams,sp1db)
 #createDataPredictTable(sp1db, deepGameLimit)
 #exportDataPredictToCsv(sp1csvDataPredict,sp1db)
@@ -163,6 +163,19 @@ extractFromCsv(sp2csvRawData,sp2db)
 createHistoricSeasonTable(sp2db)
 createDataModelTable(sp2db,deepGameLimit,sp2StartDate)
 exportDataModelToCsv(sp2csvDataModel,sp2db)
-#exportTeamsToCSV(sp2Teams,sp2db)
-#createDataPredictTable(sp2db, deepGameLimit)
-#exportDataPredictToCsv(sp2csvDataPredict,sp2db)
+exportTeamsToCSV(sp2Teams,sp2db)
+createDataPredictTable(sp2db, deepGameLimit)
+exportDataPredictToCsv(sp2csvDataPredict,sp2db)
+
+def prepareNextGame():
+    createNextMatchTable(l1db)
+    createNextMatchTable(f2db)
+    createNextMatchTable(e0db)
+    createNextMatchTable(e1db)
+    createNextMatchTable(d1db)
+    createNextMatchTable(d2db)
+    createNextMatchTable(i2db)
+    createNextMatchTable(sp2db)
+
+# Uncomment to prepare nextgame
+#prepareNextGame()
