@@ -1,4 +1,43 @@
 import sqlite3
+import urllib
+
+#loadDataToDB("./data/raw/F1.csv","./data/db/ligue1.sqlite")
+def extractFromWebSite(url, db):
+    # Connect to database
+    conn = sqlite3.connect(db)
+    cur = conn.cursor()
+
+    # Drop the table
+    cur.execute('DROP TABLE IF EXISTS RAWDATAS')
+
+    ## Open F1.csv containing ligue 1 historic data
+    l1csv = urllib.urlopen(url)
+
+    # Create the table
+    columns = l1csv.readline().strip().replace('<','MINOR').replace('>','MAJOR').replace('.','POINT').replace('AS','ASX')
+    columnsList = columns.split(',')
+    columnDef = ""
+    for column in columnsList:
+        columnDef = columnDef+column+" TEXT, "
+
+    query = "CREATE TABLE RAWDATAS ("+columnDef.rstrip().rstrip(',')+")"
+
+    cur.execute(query)
+
+    conn.commit()
+
+    # Insert data into table
+    for row in l1csv:
+        valuesDef = ""
+        values = row.strip().split(',')
+        for value in values:
+            valuesDef = valuesDef + "'"+value.replace("'",'')+"', "
+        #print valuesDef.strip().strip(",")
+        queryRow = "INSERT INTO RAWDATAS (" + columns.strip() + ") VALUES (" + valuesDef.strip().strip(",") + ")"
+        cur.execute(queryRow)
+
+    conn.commit()
+    conn.close()
 
 #loadDataToDB("./data/raw/F1.csv","./data/db/ligue1.sqlite")
 def extractFromCsv(csvInputPath, db):
@@ -161,7 +200,7 @@ def createDataModelTable(db, deepLimit, firstDateMatch):
             SELECT FTHG, FTR
             FROM MATCHS
             WHERE DateInt < ? AND HomeTeam = ? ORDER BY DateInt DESC LIMIT ?'''
-        ,(match[1], match[2], deepLimit, ))
+        ,(match[1], match[2].strip(), deepLimit, ))
         matchsHome = cur.fetchall()
         countHome = 0.0
         nbHomeVictory = 0
@@ -180,7 +219,7 @@ def createDataModelTable(db, deepLimit, firstDateMatch):
             SELECT FTAG, FTR
             FROM MATCHS
             WHERE DateInt < ? AND AwayTeam = ? ORDER BY DateInt DESC LIMIT ?'''
-            ,(match[1], match[3], deepLimit, ))
+            ,(match[1], match[3].strip(), deepLimit, ))
         matchsExt = cur.fetchall()
         countExt = 0.0
         nbExtVictory = 0

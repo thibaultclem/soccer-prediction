@@ -2,6 +2,9 @@ from soccerPrediction import *
 
 # General
 deepGameLimit = 5
+website = "http://www.football-data.co.uk/mmz4281"
+season = "1516"
+url = website+"/"+season+"/"
 
 # Fench Ligue 1
 l1db = "./data/db/f1.sqlite"
@@ -11,13 +14,14 @@ l1csvDataModel = "./data/result/f1-data-model.csv"
 l1csvDataPredict = "./data/result/f1-data-predict.csv"
 l1StartDate = "150918"
 
-extractFromCsv(l1csvRawData,l1db)
-createHistoricSeasonTable(l1db)
-createDataModelTable(l1db,deepGameLimit,l1StartDate)
-exportDataModelToCsv(l1csvDataModel,l1db)
-exportTeamsToCSV(l1Teams,l1db)
-createDataPredictTable(l1db, deepGameLimit)
-exportDataPredictToCsv(l1csvDataPredict,l1db)
+#extractFromCsv(l1csvRawData,l1db)
+#extractFromWebSite(url+"F1.csv",l1db)
+#createHistoricSeasonTable(l1db)
+#createDataModelTable(l1db,deepGameLimit,l1StartDate)
+#exportDataModelToCsv(l1csvDataModel,l1db)
+#exportTeamsToCSV(l1Teams,l1db)
+#createDataPredictTable(l1db, deepGameLimit)
+#exportDataPredictToCsv(l1csvDataPredict,l1db)
 
 # French Ligue 2
 f2db = "./data/db/f2.sqlite"
@@ -27,7 +31,8 @@ f2csvDataModel = "./data/result/f2-data-model.csv"
 f2csvDataPredict = "./data/result/f2-data-predict.csv"
 f2StartDate = "150815"
 
-extractFromCsv(f2csvRawData,f2db)
+#extractFromCsv(f2csvRawData,f2db)
+extractFromWebSite(url+"F2.csv",f2db)
 createHistoricSeasonTable(f2db)
 createDataModelTable(f2db,deepGameLimit,f2StartDate)
 exportDataModelToCsv(f2csvDataModel,f2db)
@@ -44,7 +49,8 @@ e0csvDataModel = "./data/result/e0-data-model.csv"
 e0csvDataPredict = "./data/result/e0-data-predict.csv"
 e0StartDate = "150919"
 
-extractFromCsv(e0csvRawData,e0db)
+#extractFromCsv(e0csvRawData,e0db)
+extractFromWebSite(url+"E0.csv",e0db)
 createHistoricSeasonTable(e0db)
 createDataModelTable(e0db,deepGameLimit,e0StartDate)
 exportDataModelToCsv(e0csvDataModel,e0db)
@@ -60,7 +66,8 @@ e1csvDataModel = "./data/result/e1-data-model.csv"
 e1csvDataPredict = "./data/result/e1-data-predict.csv"
 e1StartDate = "150911"
 
-extractFromCsv(e1csvRawData,e1db)
+#extractFromCsv(e1csvRawData,e1db)
+extractFromWebSite(url+"E1.csv",e1db)
 createHistoricSeasonTable(e1db)
 createDataModelTable(e1db,deepGameLimit,e1StartDate)
 exportDataModelToCsv(e1csvDataModel,e1db)
@@ -78,6 +85,7 @@ i1csvDataPredict = "./data/result/i1-data-predict.csv"
 i1StartDate = "150926"
 
 #extractFromCsv(i1csvRawData,i1db)
+#extractFromWebSite(url+"I1.csv",i1db)
 #createHistoricSeasonTable(i1db)
 #createDataModelTable(i1db,deepGameLimit,i1StartDate)
 #exportDataModelToCsv(i1csvDataModel,i1db)
@@ -93,7 +101,8 @@ i2csvDataModel = "./data/result/i2-data-model.csv"
 i2csvDataPredict = "./data/result/i2-data-predict.csv"
 i2StartDate = "151002"
 
-extractFromCsv(i2csvRawData,i2db)
+#extractFromCsv(i2csvRawData,i2db)
+extractFromWebSite(url+"I2.csv",i2db)
 createHistoricSeasonTable(i2db)
 createDataModelTable(i2db,deepGameLimit,i2StartDate)
 exportDataModelToCsv(i2csvDataModel,i2db)
@@ -110,7 +119,8 @@ d1csvDataModel = "./data/result/d1-data-model.csv"
 d1csvDataPredict = "./data/result/d1-data-predict.csv"
 d1StartDate = "150922"
 
-extractFromCsv(d1csvRawData,d1db)
+#extractFromCsv(d1csvRawData,d1db)
+extractFromWebSite(url+"D1.csv",d1db)
 createHistoricSeasonTable(d1db)
 createDataModelTable(d1db,deepGameLimit,d1StartDate)
 exportDataModelToCsv(d1csvDataModel,d1db)
@@ -126,7 +136,8 @@ d2csvDataModel = "./data/result/d2-data-model.csv"
 d2csvDataPredict = "./data/result/d2-data-predict.csv"
 d2StartDate = "150911"
 
-extractFromCsv(d2csvRawData,d2db)
+#extractFromCsv(d2csvRawData,d2db)
+extractFromWebSite(url+"D2.csv",d2db)
 createHistoricSeasonTable(d2db)
 createDataModelTable(d2db,deepGameLimit,d2StartDate)
 exportDataModelToCsv(d2csvDataModel,d2db)
@@ -144,6 +155,7 @@ sp1csvDataPredict = "./data/result/sp1-data-predict.csv"
 sp1StartDate = "150924"
 
 #extractFromCsv(sp1csvRawData,sp1db)
+#extractFromWebSite(url+"SP1.csv",sp1db)
 #createHistoricSeasonTable(sp1db)
 #createDataModelTable(sp1db,deepGameLimit,sp1StartDate)
 #exportDataModelToCsv(sp1csvDataModel,sp1db)
@@ -160,6 +172,7 @@ sp2csvDataPredict = "./data/result/sp2-data-predict.csv"
 sp2StartDate = "150926"
 
 extractFromCsv(sp2csvRawData,sp2db)
+extractFromWebSite(url+"SP2.csv",sp2db)
 createHistoricSeasonTable(sp2db)
 createDataModelTable(sp2db,deepGameLimit,sp2StartDate)
 exportDataModelToCsv(sp2csvDataModel,sp2db)
@@ -177,5 +190,5 @@ def prepareNextGame():
     createNextMatchTable(i2db)
     createNextMatchTable(sp2db)
 
-# Uncomment to prepare nextgame
+# Uncomment to prepare nextgame (erase current row in NEXTMATCHS table)
 #prepareNextGame()
