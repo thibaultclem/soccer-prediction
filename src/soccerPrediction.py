@@ -4,6 +4,7 @@ import difflib
 import urllib
 import json
 import sqlite3
+import requests
 
 #loadDataToDB("./data/raw/F1.csv","./data/db/ligue1.sqlite")
 def extractFromWebSite(url, db):
@@ -438,8 +439,10 @@ def createNextMatchTable(season,leagueId,db):
     seasonInfoURL = "http://api.football-data.org/v1/soccerseasons/?season="+str(season)
     urlNextMatch = "http://api.football-data.org/v1/fixtures"
 
+    headers = { 'X-Auth-Token': 'YOUR_TOKEN', 'X-Response-Control': 'minified' }
+
     # Get the current match day
-    seasonInfo = json.loads(urllib.urlopen(seasonInfoURL).read())
+    seasonInfo = json.loads(requests.get(seasonInfoURL,headers=headers).text)
     for leagueInfo in seasonInfo:
         if (leagueInfo['league'] == leagueId):
             matchDay = str(leagueInfo["currentMatchday"])
@@ -464,7 +467,7 @@ def createNextMatchTable(season,leagueId,db):
     for match in cur.fetchall():
         teams.append(str(match[0]))
 
-    nextGamesInfo = json.loads(urllib.urlopen(url).read())
+    nextGamesInfo = json.loads(requests.get(url,headers=headers).text)
 
     for nextGameInfo in nextGamesInfo["fixtures"]:
         homeTeam = difflib.get_close_matches(nextGameInfo['homeTeamName'],teams,1,0.3)[0]
