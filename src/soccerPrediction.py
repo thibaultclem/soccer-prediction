@@ -7,7 +7,12 @@ import sqlite3
 import requests
 
 #loadDataToDB("./data/raw/F1.csv","./data/db/ligue1.sqlite")
-def extractFromWebSite(url, db):
+def extractFromWebSite(leagueId, season, db):
+
+    website = "http://www.football-data.co.uk/mmz4281"
+    seasonRawData = season[2:4]+str(int(season[2:4])+1)
+    url = website+"/"+seasonRawData+"/"+leagueId+".csv"
+
     # Connect to database
     conn = sqlite3.connect(db)
     cur = conn.cursor()
@@ -439,7 +444,7 @@ def createNextMatchTable(season,leagueId,db):
     seasonInfoURL = "http://api.football-data.org/v1/soccerseasons/?season="+str(season)
     urlNextMatch = "http://api.football-data.org/v1/fixtures"
 
-    headers = { 'X-Auth-Token': 'YOUR_TOKEN', 'X-Response-Control': 'minified' }
+    headers = { 'X-Auth-Token': 'c6d148de587f4db99f0495b9babe50fd', 'X-Response-Control': 'minified' }
 
     # Get the current match day
     seasonInfo = json.loads(requests.get(seasonInfoURL,headers=headers).text)
