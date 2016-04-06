@@ -1,5 +1,9 @@
-import sqlite3
+# - *- coding: utf- 8 - *-
+
+import difflib
 import urllib
+import json
+import sqlite3
 
 #loadDataToDB("./data/raw/F1.csv","./data/db/ligue1.sqlite")
 def extractFromWebSite(url, db):
@@ -429,7 +433,73 @@ def exportTeamsToCSV(csvOutputPath, db):
 
     conn.close()
 
-def createNextMatchTable(db):
+def createNextMatchTable(season,leagueId,db):
+
+    seasonInfoURL = "http://api.football-data.org/v1/soccerseasons/?season="+str(season)
+    urlNextMatch = "http://api.football-data.org/v1/fixtures"
+
+    # Get the current match day
+    seasonInfo = json.loads(urllib.urlopen(seasonInfoURL).read())
+    for leagueInfo in seasonInfo:
+        if (leagueInfo['league'] == leagueId):
+            matchDay = str(leagueInfo["currentMatchday"])
+            url = "http://api.football-data.org/v1/fixtures?matchday="+matchDay+"&league="+leagueId
+
+    # Connect to database
+    conn = sqlite3.connect(db)
+    cur = conn.cursor()
+
+    cur.execute('DROP TABLE IF EXISTS NEXTMATCHS')
+    cur.execute('''
+    CREATE TABLE NEXTMATCHS (
+        MatchDate DATE,
+        DateInt DATE,
+        HomeTeam TEXT,
+        AwayTeam TEXT
+        )
+    ''')
+
+    teams = list()
+    cur.execute('SELECT * FROM TEAMS')
+    for match in cur.fetchall():
+        teams.append(str(match[0]))
+
+    nextGamesInfo = json.loads(urllib.urlopen(url).read())
+
+    for nextGameInfo in nextGamesInfo["fixtures"]:
+        homeTeam = difflib.get_close_matches(nextGameInfo['homeTeamName'],teams,1,0.3)[0]
+        awayTeam = difflib.get_close_matches(nextGameInfo['awayTeamName'],teams,1,0.3)[0]
+
+        # Trick for bad named teams (not good...)
+        if (leagueId == "BL2"):
+            if (nextGameInfo['homeTeamName'][:8] == "TSV 1860"): homeTeam = "Munich 1860"
+            if (nextGameInfo['awayTeamName'][:8] == "TSV 1860"): awayTeam = "Munich 1860"
+        elif (leagueId == "FL2"):
+            if (nextGameInfo['homeTeamName'] == "FC Stade Lavallois Mayenne"): homeTeam = "Laval"
+            if (nextGameInfo['awayTeamName'] == "FC Stade Lavallois Mayenne"): awayTeam = "Laval"
+            if (nextGameInfo['homeTeamName'] == "Chamois Niortais FC"): homeTeam = "Niort"
+            if (nextGameInfo['awayTeamName'] == "Chamois Niortais FC"): awayTeam = "Niort"
+
+        matchDate = nextGameInfo['date'][10]
+        matchDateInt = nextGameInfo['date'][2:4]+nextGameInfo['date'][5:7]+nextGameInfo['date'][8:10]
+        #print homeTeam,"-",awayTeam,"the",matchDateInt
+        #Insert the game in DB
+        cur.execute('''
+            INSERT INTO NEXTMATCHS(
+                HomeTeam,
+                AwayTeam,
+                MatchDate,
+                DateInt)
+            VALUES(?,?,?,?)
+        ''',
+        (homeTeam, awayTeam, matchDate, matchDateInt, ))
+        conn.commit()
+
+    conn.commit()
+    conn.close()
+
+
+def createEmptyNextMatchTable(db):
 
     # Connect to database
     conn = sqlite3.connect(db)

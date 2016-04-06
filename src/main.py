@@ -1,10 +1,21 @@
 from soccerPrediction import *
 
-# General
+###########
+# General #
+###########
+
+# To modify if needed
 deepGameLimit = 5
+season = "2015"
+
+# modify only if errors
 website = "http://www.football-data.co.uk/mmz4281"
-season = "1516"
-url = website+"/"+season+"/"
+seasonRawData = season[2:4]+str(int(season[2:4])+1)
+url = website+"/"+seasonRawData+"/"
+
+###########
+# Leagues #
+###########
 
 # Fench Ligue 1
 l1db = "./data/db/f1.sqlite"
@@ -13,6 +24,7 @@ l1csvRawData = "./data/raw/F1.csv"
 l1csvDataModel = "./data/result/f1-data-model.csv"
 l1csvDataPredict = "./data/result/f1-data-predict.csv"
 l1StartDate = "150918"
+f1matchId = "FL1"
 
 #extractFromCsv(l1csvRawData,l1db)
 #extractFromWebSite(url+"F1.csv",l1db)
@@ -20,6 +32,7 @@ l1StartDate = "150918"
 #createDataModelTable(l1db,deepGameLimit,l1StartDate)
 #exportDataModelToCsv(l1csvDataModel,l1db)
 #exportTeamsToCSV(l1Teams,l1db)
+#createNextMatchTable(season,f1matchId,l1db)
 #createDataPredictTable(l1db, deepGameLimit)
 #exportDataPredictToCsv(l1csvDataPredict,l1db)
 
@@ -30,13 +43,15 @@ f2csvRawData = "./data/raw/F2.csv"
 f2csvDataModel = "./data/result/f2-data-model.csv"
 f2csvDataPredict = "./data/result/f2-data-predict.csv"
 f2StartDate = "150815"
+f2matchId = "FL2"
 
 #extractFromCsv(f2csvRawData,f2db)
 extractFromWebSite(url+"F2.csv",f2db)
 createHistoricSeasonTable(f2db)
 createDataModelTable(f2db,deepGameLimit,f2StartDate)
 exportDataModelToCsv(f2csvDataModel,f2db)
-exportTeamsToCSV(f2Teams,f2db)
+#exportTeamsToCSV(f2Teams,f2db)
+createNextMatchTable(season,f2matchId,f2db)
 createDataPredictTable(f2db, deepGameLimit)
 exportDataPredictToCsv(f2csvDataPredict,f2db)
 
@@ -48,13 +63,15 @@ e0csvRawData = "./data/raw/e0.csv"
 e0csvDataModel = "./data/result/e0-data-model.csv"
 e0csvDataPredict = "./data/result/e0-data-predict.csv"
 e0StartDate = "150919"
+e0matchId = "PL"
 
 #extractFromCsv(e0csvRawData,e0db)
 extractFromWebSite(url+"E0.csv",e0db)
 createHistoricSeasonTable(e0db)
 createDataModelTable(e0db,deepGameLimit,e0StartDate)
 exportDataModelToCsv(e0csvDataModel,e0db)
-exportTeamsToCSV(e0Teams,e0db)
+#exportTeamsToCSV(e0Teams,e0db)
+createNextMatchTable(season,e0matchId,e0db)
 createDataPredictTable(e0db, deepGameLimit)
 exportDataPredictToCsv(e0csvDataPredict,e0db)
 
@@ -72,8 +89,8 @@ createHistoricSeasonTable(e1db)
 createDataModelTable(e1db,deepGameLimit,e1StartDate)
 exportDataModelToCsv(e1csvDataModel,e1db)
 exportTeamsToCSV(e1Teams,e1db)
-createDataPredictTable(e1db, deepGameLimit)
-exportDataPredictToCsv(e1csvDataPredict,e1db)
+#createDataPredictTable(e1db, deepGameLimit)
+#exportDataPredictToCsv(e1csvDataPredict,e1db)
 
 
 # Italia Ligue 1
@@ -83,6 +100,7 @@ i1csvRawData = "./data/raw/I1.csv"
 i1csvDataModel = "./data/result/i1-data-model.csv"
 i1csvDataPredict = "./data/result/i1-data-predict.csv"
 i1StartDate = "150926"
+i1matchId = "SA"
 
 #extractFromCsv(i1csvRawData,i1db)
 #extractFromWebSite(url+"I1.csv",i1db)
@@ -90,6 +108,7 @@ i1StartDate = "150926"
 #createDataModelTable(i1db,deepGameLimit,i1StartDate)
 #exportDataModelToCsv(i1csvDataModel,i1db)
 #exportTeamsToCSV(i1Teams,i1db)
+#createNextMatchTable(season,i1matchId,i1db)
 #createDataPredictTable(i1db, deepGameLimit)
 #exportDataPredictToCsv(i1csvDataPredict,i1db)
 
@@ -107,8 +126,8 @@ createHistoricSeasonTable(i2db)
 createDataModelTable(i2db,deepGameLimit,i2StartDate)
 exportDataModelToCsv(i2csvDataModel,i2db)
 exportTeamsToCSV(i2Teams,i2db)
-createDataPredictTable(i2db, deepGameLimit)
-exportDataPredictToCsv(i2csvDataPredict,i2db)
+#createDataPredictTable(i2db, deepGameLimit)
+#exportDataPredictToCsv(i2csvDataPredict,i2db)
 
 
 # Deutch Ligue 1
@@ -118,13 +137,15 @@ d1csvRawData = "./data/raw/D1.csv"
 d1csvDataModel = "./data/result/d1-data-model.csv"
 d1csvDataPredict = "./data/result/d1-data-predict.csv"
 d1StartDate = "150922"
+d1matchId = "BL1"
 
 #extractFromCsv(d1csvRawData,d1db)
 extractFromWebSite(url+"D1.csv",d1db)
 createHistoricSeasonTable(d1db)
 createDataModelTable(d1db,deepGameLimit,d1StartDate)
 exportDataModelToCsv(d1csvDataModel,d1db)
-exportTeamsToCSV(d1Teams,d1db)
+#exportTeamsToCSV(d1Teams,d1db)
+createNextMatchTable(season,d1matchId,d1db)
 createDataPredictTable(d1db, deepGameLimit)
 exportDataPredictToCsv(d1csvDataPredict,d1db)
 
@@ -135,13 +156,15 @@ d2csvRawData = "./data/raw/D2.csv"
 d2csvDataModel = "./data/result/d2-data-model.csv"
 d2csvDataPredict = "./data/result/d2-data-predict.csv"
 d2StartDate = "150911"
+d2matchId = "BL2"
 
 #extractFromCsv(d2csvRawData,d2db)
 extractFromWebSite(url+"D2.csv",d2db)
 createHistoricSeasonTable(d2db)
 createDataModelTable(d2db,deepGameLimit,d2StartDate)
 exportDataModelToCsv(d2csvDataModel,d2db)
-exportTeamsToCSV(d2Teams,d2db)
+#exportTeamsToCSV(d2Teams,d2db)
+createNextMatchTable(season,d2matchId,d2db)
 createDataPredictTable(d2db, deepGameLimit)
 exportDataPredictToCsv(d2csvDataPredict,d2db)
 
@@ -153,6 +176,7 @@ sp1csvRawData = "./data/raw/SP1.csv"
 sp1csvDataModel = "./data/result/sp1-data-model.csv"
 sp1csvDataPredict = "./data/result/sp1-data-predict.csv"
 sp1StartDate = "150924"
+sp1matchId = "PD"
 
 #extractFromCsv(sp1csvRawData,sp1db)
 #extractFromWebSite(url+"SP1.csv",sp1db)
@@ -160,6 +184,7 @@ sp1StartDate = "150924"
 #createDataModelTable(sp1db,deepGameLimit,sp1StartDate)
 #exportDataModelToCsv(sp1csvDataModel,sp1db)
 #exportTeamsToCSV(sp1Teams,sp1db)
+#createNextMatchTable(season,sp1matchId,sp1db)
 #createDataPredictTable(sp1db, deepGameLimit)
 #exportDataPredictToCsv(sp1csvDataPredict,sp1db)
 
@@ -170,25 +195,22 @@ sp2csvRawData = "./data/raw/SP2.csv"
 sp2csvDataModel = "./data/result/sp2-data-model.csv"
 sp2csvDataPredict = "./data/result/sp2-data-predict.csv"
 sp2StartDate = "150926"
+sp2matchId = "SD"
 
-extractFromCsv(sp2csvRawData,sp2db)
+#extractFromCsv(sp2csvRawData,sp2db)
 extractFromWebSite(url+"SP2.csv",sp2db)
 createHistoricSeasonTable(sp2db)
 createDataModelTable(sp2db,deepGameLimit,sp2StartDate)
 exportDataModelToCsv(sp2csvDataModel,sp2db)
-exportTeamsToCSV(sp2Teams,sp2db)
+#exportTeamsToCSV(sp2Teams,sp2db)
+createNextMatchTable(season,sp2matchId,sp2db)
 createDataPredictTable(sp2db, deepGameLimit)
 exportDataPredictToCsv(sp2csvDataPredict,sp2db)
 
+# Some league need manual enter for next match because not available online:
 def prepareNextGame():
-    createNextMatchTable(l1db)
-    createNextMatchTable(f2db)
-    createNextMatchTable(e0db)
     createNextMatchTable(e1db)
-    createNextMatchTable(d1db)
-    createNextMatchTable(d2db)
     createNextMatchTable(i2db)
-    createNextMatchTable(sp2db)
 
-# Uncomment to prepare nextgame (erase current row in NEXTMATCHS table)
+# Uncomment to prepare next match (erase current row in NEXTMATCHS table)
 #prepareNextGame()
