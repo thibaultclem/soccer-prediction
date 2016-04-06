@@ -60,7 +60,7 @@ e1csvDataPredict = "./data/result/e1-data-predict.csv"
 e1StartDate = "150911"
 
 #extractFromCsv(e1csvRawData,e1db)
-extractFromWebSite("E1",season,db)
+extractFromWebSite("E1",season,e1db)
 createHistoricSeasonTable(e1db)
 createDataModelTable(e1db,deepGameLimit,e1StartDate)
 exportDataModelToCsv(e1csvDataModel,e1db)
@@ -77,7 +77,7 @@ i2csvDataPredict = "./data/result/i2-data-predict.csv"
 i2StartDate = "151002"
 
 #extractFromCsv(i2csvRawData,i2db)
-extractFromWebSite("I2",season,db)
+extractFromWebSite("I2",season,i2db)
 createHistoricSeasonTable(i2db)
 createDataModelTable(i2db,deepGameLimit,i2StartDate)
 exportDataModelToCsv(i2csvDataModel,i2db)
