@@ -90,8 +90,8 @@ exportTeamsToCSV(i2Teams,i2db)
 
 # Some league need manual enter for next match because not available online:
 def prepareNextGame():
-    createNextMatchTable(e1db)
-    createNextMatchTable(i2db)
+    createEmptyNextMatchTable(e1db)
+    createEmptyNextMatchTable(i2db)
 
 # Uncomment to prepare next match (erase current row in NEXTMATCHS table)
-prepareNextGame()
+#prepareNextGame()
