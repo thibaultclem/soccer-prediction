@@ -121,7 +121,8 @@ def createHistoricSeasonTable(db):
             AwayTeam TEXT,
             FTHG INTEGER,
             FTAG INTEGER,
-            FTR CHAR
+            FTR CHAR,
+            Bet INTEGER
             )
     ''')
     #FTHG = Full Time Home Team Goals
@@ -130,15 +131,21 @@ def createHistoricSeasonTable(db):
     conn.commit()
 
     cur.execute('''
-    SELECT Date, HomeTeam, AwayTeam, FTHG, FTAG, FTR
+    SELECT Date, HomeTeam, AwayTeam, FTHG, FTAG, FTR, BbAvH, BbAvA, BbAvD
     FROM RAWDATAS
     ''')
 
     for row in cur.fetchall():
+
+        #Get the bet associate to the Result
+        bet = row[6]
+        if (row[5] == 'A'): bet = row[7]
+        elif (row[5] == 'D'): bet = row[8]
+
         cur.execute('''
             INSERT INTO
-                MATCHS(MatchDate, DateInt, HomeTeam, AwayTeam, FTHG, FTAG, FTR)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+                MATCHS(MatchDate, DateInt, HomeTeam, AwayTeam, FTHG, FTAG, FTR, Bet)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             '''
         ,(row[0],
         row[0][6:]+row[0][3:5]+row[0][:2],
@@ -146,7 +153,8 @@ def createHistoricSeasonTable(db):
         row[2],
         row[3],
         row[4],
-        row[5], ))
+        row[5],
+        bet, ))
     conn.commit()
 
     conn.close()
@@ -190,13 +198,14 @@ def createDataModelTable(db, deepLimit, firstDateMatch):
         ExtDefeat INTEGER,
         ExtDraw INTEGER,
         ExtGoal INTEGER,
-        Result CHAR
+        Result CHAR,
+        Bet INTEGER
         )
     ''')
 
     # We don't use the first 5 games (date format is AAMMDD)
     cur.execute('''
-        SELECT MatchDate, DateInt, HomeTeam, AwayTeam, FTR
+        SELECT MatchDate, DateInt, HomeTeam, AwayTeam, FTR, Bet
         FROM MATCHS
         WHERE DateInt >= ? ORDER BY DateInt'''
     ,(firstDateMatch, ))
@@ -252,8 +261,9 @@ def createDataModelTable(db, deepLimit, firstDateMatch):
             ExtDefeat,
             ExtDraw,
             ExtGoal,
-            Result)
-        VALUES(?,?,?,?,?,?,?,?,?)
+            Result,
+            Bet)
+        VALUES(?,?,?,?,?,?,?,?,?,?)
         ''',
         (nbHomeVictory/countHome,
         nbHomeDefeat/countHome,
@@ -263,9 +273,10 @@ def createDataModelTable(db, deepLimit, firstDateMatch):
         nbExtDefeat/countExt,
         nbExtDraw/countExt,
         nbExtGoal/countExt,
-        match[4], ))
+        match[4],
+        match[5], ))
         conn.commit()
-        #print nbHomeVictory/countHome, nbHomeDefeat/countHome, nbHomeDraw/countHome, nbHomeGoal/countHome, nbExtVictory/countExt, nbExtDefeat/countExt, nbExtDraw/countExt, nbExtGoal/countExt, match[4]
+        #print nbHomeVictory/countHome, nbHomeDefeat/countHome, nbHomeDraw/countHome, nbHomeGoal/countHome, nbExtVictory/countExt, nbExtDefeat/countExt, nbExtDraw/countExt, nbExtGoal/countExt, match[4], match[5]
 
     conn.close()
 
@@ -295,6 +306,29 @@ def exportDataModelToCsv(csvModelOutputPath,db):
 
     conn.close()
 
+#
+#
+#
+# exportDataModelToCsv("./data/result/l1-data.csv"","./data/db/ligue1.sqlite")
+def exportDataModelWithBetToCsv(csvModelOutputPath,db):
+
+    # Connect to database
+    conn = sqlite3.connect(db)
+    cur = conn.cursor()
+
+    # Print all to csv
+    dataModel = open(csvModelOutputPath,'w')
+
+    dataModel.write("HomeVictory,HomeDefeat,HomeDraw,HomeGoal,ExtVictory,ExtDefeat,ExtDraw,ExtGoal,Result,Bet\n")
+
+    cur.execute('SELECT * FROM PREMATCHS')
+    for match in cur.fetchall():
+        line = str(match[0])+','+str(match[1])+','+str(match[2])+','+str(match[3])+','+str(match[4])+','+str(match[5])+','+str(match[6])+','+str(match[7])+','+str(match[8])+','+str(match[9])
+        #line = str(match[0])+','+str(match[1])+','+str(match[2])+','+str(match[3])+','+str(match[4])+','+str(match[5])+','+str(match[6])+','+str(match[7])
+        dataModel.write(line+'\n')
+    dataModel.close
+
+    conn.close()
 
 
 #

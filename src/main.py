@@ -1,34 +1,27 @@
 from soccerPrediction import *
 
-###########
-# General #
-###########
-
 # To modify if needed
 deepGameLimit = 5
 season = "2015"
 
-###########
-# Leagues #
-###########
 
 def processLeague(leagueId,leagueApiId,starDate):
 
     db = "./data/db/"+leagueId+".sqlite"
     teams = "./data/result/"+leagueId+"-teams.csv"
     csvDataModel = "./data/result/"+leagueId+"-data-model.csv"
+    csvDataModelWithBet = "./data/result/"+leagueId+"-data-model-bet.csv"
     csvDataPredict = "./data/result/"+leagueId+"-data-predict.csv"
 
     extractFromWebSite(leagueId,season,db)
     createHistoricSeasonTable(db)
     createDataModelTable(db,deepGameLimit,starDate)
     exportDataModelToCsv(csvDataModel,db)
+    exportDataModelWithBetToCsv(csvDataModelWithBet,db)
     createNextMatchTable(season,leagueApiId,db)
     createDataPredictTable(db, deepGameLimit)
     exportDataPredictToCsv(csvDataPredict,db)
 
-# Portuguese Ligue 1
-processLeague('P1','PPL',"150925")
 # Fench Ligue 1
 #processLeague('F1','FL1',"150918")
 # Fench Ligue 2
@@ -45,6 +38,15 @@ processLeague('D2','BL2',"150911")
 processLeague('SP2','SD',"150926")
 # Italia Ligue 1
 #processLeague('I1','SA',"150926")
+# Portuguese Ligue 1
+#processLeague('P1','PPL',"150925")
+# Netherlands Ligue 1
+processLeague('N1','DED',"150918")
+
+
+
+
+
 
 
 ########
@@ -92,4 +94,4 @@ def prepareNextGame():
     createNextMatchTable(i2db)
 
 # Uncomment to prepare next match (erase current row in NEXTMATCHS table)
-#prepareNextGame()
+prepareNextGame()
