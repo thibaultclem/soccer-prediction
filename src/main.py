@@ -67,8 +67,8 @@ createHistoricSeasonTable(e1db)
 createDataModelTable(e1db,deepGameLimit,e1StartDate)
 exportDataModelToCsv(e1csvDataModel,e1db)
 exportTeamsToCSV(e1Teams,e1db)
-#createDataPredictTable(e1db, deepGameLimit)
-#exportDataPredictToCsv(e1csvDataPredict,e1db)
+createDataPredictTable(e1db, deepGameLimit)
+exportDataPredictToCsv(e1csvDataPredict,e1db)
 
 # Italia Ligue 2
 i2db = "./data/db/i2.sqlite"
@@ -84,8 +84,8 @@ createHistoricSeasonTable(i2db)
 createDataModelTable(i2db,deepGameLimit,i2StartDate)
 exportDataModelToCsv(i2csvDataModel,i2db)
 exportTeamsToCSV(i2Teams,i2db)
-#createDataPredictTable(i2db, deepGameLimit)
-#exportDataPredictToCsv(i2csvDataPredict,i2db)
+createDataPredictTable(i2db, deepGameLimit)
+exportDataPredictToCsv(i2csvDataPredict,i2db)
 
 
 # Some league need manual enter for next match because not available online:
