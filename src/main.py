@@ -24,25 +24,25 @@ def processLeague(leagueId,leagueApiId,starDate):
 
 
 # Fench Ligue 1
-processLeague('F1','FL1',"150918")
+processLeague('F1','FL1',"151016")
 # Fench Ligue 2
-processLeague('F2','FL2',"150815")
+processLeague('F2','FL2',"151002")
 # English Ligue 1
-processLeague('E0','PL',"150919")
+processLeague('E0','PL',"151024")
 # Deutchsland Ligue 1
-processLeague('D1','BL1',"150922")
+processLeague('D1','BL1',"151023")
 # Deutchsland Ligue 2
-processLeague('D2','BL2',"150911")
+processLeague('D2','BL2',"151002")
 # Spain Ligue 1
-processLeague('SP1','PD',"150924")
+processLeague('SP1','PD',"151030")
 # Spain Ligue 2
-processLeague('SP2','SD',"150926")
+processLeague('SP2','SD',"151024")
 # Italia Ligue 1
-processLeague('I1','SA',"150926")
+processLeague('I1','SA',"151026")
 # Portuguese Ligue 1
 #processLeague('P1','PPL',"150925")
 # Netherlands Ligue 1
-processLeague('N1','DED',"150918")
+processLeague('N1','DED',"151023")
 
 
 
@@ -61,7 +61,7 @@ e1csvRawData = "./data/raw/E1.csv"
 e1csvDataModel = "./data/result/e1-data-model.csv"
 e1csvDataModelWithBet = "./data/result/e1-data-model-bet.csv"
 e1csvDataPredict = "./data/result/e1-data-predict.csv"
-e1StartDate = "150911"
+e1StartDate = "150929"
 
 #extractFromCsv(e1csvRawData,e1db)
 extractFromWebSite("E1",season,e1db)
@@ -80,7 +80,7 @@ i2csvRawData = "./data/raw/I2.csv"
 i2csvDataModel = "./data/result/i2-data-model.csv"
 i2csvDataModelWithBet = "./data/result/i2-data-model-bet.csv"
 i2csvDataPredict = "./data/result/i2-data-predict.csv"
-i2StartDate = "151002"
+i2StartDate = "151026"
 
 #extractFromCsv(i2csvRawData,i2db)
 extractFromWebSite("I2",season,i2db)
