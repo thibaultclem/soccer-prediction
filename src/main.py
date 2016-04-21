@@ -22,6 +22,7 @@ def processLeague(leagueId,leagueApiId,starDate):
     createDataPredictTable(db, deepGameLimit)
     exportDataPredictToCsv(csvDataPredict,db)
 
+
 # Fench Ligue 1
 #processLeague('F1','FL1',"150918")
 # Fench Ligue 2

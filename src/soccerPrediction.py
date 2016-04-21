@@ -9,9 +9,11 @@ import requests
 #loadDataToDB("./data/raw/F1.csv","./data/db/ligue1.sqlite")
 def extractFromWebSite(leagueId, season, db):
 
+    maxColumn = 26
+
     website = "http://www.football-data.co.uk/mmz4281"
-    seasonRawData = season[2:4]+str(int(season[2:4])+1)
-    url = website+"/"+seasonRawData+"/"+leagueId+".csv"
+    currentSeason = season[2:4]+str(int(season[2:4])+1)
+    url = website+"/"+currentSeason+"/"+leagueId+".csv"
 
     # Connect to database
     conn = sqlite3.connect(db)
@@ -20,14 +22,16 @@ def extractFromWebSite(leagueId, season, db):
     # Drop the table
     cur.execute('DROP TABLE IF EXISTS RAWDATAS')
 
-    ## Open F1.csv containing ligue 1 historic data
-    l1csv = urllib.urlopen(url)
-
     # Create the table
+    l1csv = urllib.urlopen(url)
     columns = l1csv.readline().strip().replace('<','MINOR').replace('>','MAJOR').replace('.','POINT').replace('AS','ASX')
     columnsList = columns.split(',')
     columnDef = ""
+    counter = 0
     for column in columnsList:
+        #Get only 25 five first column
+        counter += 1
+        if (counter > maxColumn): break
         columnDef = columnDef+column+" TEXT, "
 
     query = "CREATE TABLE RAWDATAS ("+columnDef.rstrip().rstrip(',')+")"
@@ -36,17 +40,37 @@ def extractFromWebSite(leagueId, season, db):
 
     conn.commit()
 
-    # Insert data into table
-    for row in l1csv:
-        valuesDef = ""
-        values = row.strip().split(',')
-        for value in values:
-            valuesDef = valuesDef + "'"+value.replace("'",'')+"', "
-        #print valuesDef.strip().strip(",")
-        queryRow = "INSERT INTO RAWDATAS (" + columns.strip() + ") VALUES (" + valuesDef.strip().strip(",") + ")"
-        cur.execute(queryRow)
+    #Get only the 25 first result of the column list
+    columns = columnsList[0]
+    for nb in range(1,maxColumn):
+        columns += ","+columnsList[nb]
+    print columns
 
-    conn.commit()
+    #Get historic data for last 3 seasons
+    for x in range(0, 3):
+
+        seasonRawData = str(int(season[2:4])-x)+str(int(season[2:4])-x+1)
+        url = website+"/"+seasonRawData+"/"+leagueId+".csv"
+        print url
+
+        ## Download csv containing historic data
+        l1csv = urllib.urlopen(url)
+
+        # Insert data into table
+        for row in l1csv:
+            valuesDef = ""
+            values = row.strip().split(',')
+            count = 0
+            for value in values:
+                count += 1
+                if (count > maxColumn): break
+                valuesDef = valuesDef + "'"+value.replace("'",'')+"', "
+            #print valuesDef.strip().strip(",")
+            queryRow = "INSERT INTO RAWDATAS (" + columns.strip() + ") VALUES (" + valuesDef.strip().strip(",") + ")"
+            cur.execute(queryRow)
+
+        conn.commit()
+
     conn.close()
 
 #loadDataToDB("./data/raw/F1.csv","./data/db/ligue1.sqlite")
@@ -131,7 +155,7 @@ def createHistoricSeasonTable(db):
     conn.commit()
 
     cur.execute('''
-    SELECT Date, HomeTeam, AwayTeam, FTHG, FTAG, FTR, BbAvH, BbAvA, BbAvD
+    SELECT Date, HomeTeam, AwayTeam, FTHG, FTAG, FTR, B365H, B365A, B365D
     FROM RAWDATAS
     ''')
 
