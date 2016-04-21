@@ -44,17 +44,18 @@ def extractFromWebSite(leagueId, season, db):
     columns = columnsList[0]
     for nb in range(1,maxColumn):
         columns += ","+columnsList[nb]
-    print columns
 
     #Get historic data for last 3 seasons
     for x in range(0, 3):
 
         seasonRawData = str(int(season[2:4])-x)+str(int(season[2:4])-x+1)
         url = website+"/"+seasonRawData+"/"+leagueId+".csv"
-        print url
 
         ## Download csv containing historic data
         l1csv = urllib.urlopen(url)
+
+        # Skip the first line
+        l1csv.readline()
 
         # Insert data into table
         for row in l1csv:
@@ -189,6 +190,14 @@ def createHistoricSeasonTable(db):
 # createDataModelTable("./data/db/ligue1.sqlite",5,"151022")
 def createDataModelTable(db, deepLimit, firstDateMatch):
 
+    # 10-30 50-70 80-...
+    # Where (dateInt > 80) OR (dateInt > 50 AND dateInt < 70) OR (dateInt > 10 AND dateInt < 30)
+
+    #Calcul for remove interseason
+    inter1 = "(DateInt >= "+firstDateMatch+")"
+    inter2 = "(DateInt >= "+str(int(firstDateMatch)-10000)+" AND DateInt < "+str(int(firstDateMatch)-300)+")"
+    inter3 = "(DateInt >= "+str(int(firstDateMatch)-20000)+" AND DateInt < "+str(int(firstDateMatch)-10300)+")"
+
     # Connect to database
     conn = sqlite3.connect(db)
     cur = conn.cursor()
@@ -228,11 +237,11 @@ def createDataModelTable(db, deepLimit, firstDateMatch):
     ''')
 
     # We don't use the first 5 games (date format is AAMMDD)
-    cur.execute('''
+    query = '''
         SELECT MatchDate, DateInt, HomeTeam, AwayTeam, FTR, Bet
         FROM MATCHS
-        WHERE DateInt >= ? ORDER BY DateInt'''
-    ,(firstDateMatch, ))
+        WHERE '''+inter1+''' OR '''+inter2+''' OR '''+inter3+''' ORDER BY DateInt'''
+    cur.execute(query)
     matchs = cur.fetchall()
 
     for match in matchs:
@@ -343,7 +352,7 @@ def exportDataModelWithBetToCsv(csvModelOutputPath,db):
     # Print all to csv
     dataModel = open(csvModelOutputPath,'w')
 
-    dataModel.write("HomeVictory,HomeDefeat,HomeDraw,HomeGoal,ExtVictory,ExtDefeat,ExtDraw,ExtGoal,Result,Bet\n")
+    dataModel.write("HomeVictory,HomeDefeat,HomeDraw,HomeGoal,ExtVictory,ExtDefeat,ExtDraw,ExtGoal,TrueResult,Bet\n")
 
     cur.execute('SELECT * FROM PREMATCHS')
     for match in cur.fetchall():
