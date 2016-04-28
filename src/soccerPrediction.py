@@ -542,10 +542,11 @@ def createNextMatchTable(season,leagueId,db):
     nextGamesInfo = json.loads(requests.get(url,headers=headers).text)
 
     for nextGameInfo in nextGamesInfo["fixtures"]:
+        # Match Teams name different from soccer API
         homeTeam = difflib.get_close_matches(nextGameInfo['homeTeamName'],teams,1,0.3)[0]
         awayTeam = difflib.get_close_matches(nextGameInfo['awayTeamName'],teams,1,0.3)[0]
 
-        # Trick for bad named teams (not good...)
+        # Trick for bad named teams (not good code :) )
         if (leagueId == "BL2"):
             if (nextGameInfo['homeTeamName'][:8] == "TSV 1860"): homeTeam = "Munich 1860"
             if (nextGameInfo['awayTeamName'][:8] == "TSV 1860"): awayTeam = "Munich 1860"
@@ -554,6 +555,12 @@ def createNextMatchTable(season,leagueId,db):
             if (nextGameInfo['awayTeamName'] == "FC Stade Lavallois Mayenne"): awayTeam = "Laval"
             if (nextGameInfo['homeTeamName'] == "Chamois Niortais FC"): homeTeam = "Niort"
             if (nextGameInfo['awayTeamName'] == "Chamois Niortais FC"): awayTeam = "Niort"
+        elif (leagueId == "SA"):
+            if (nextGameInfo['homeTeamName'] == "FC Internazionale Milano"): homeTeam = "Inter"
+            if (nextGameInfo['awayTeamName'] == "FC Internazionale Milano"): awayTeam = "Inter"
+        elif (leagueId == "SD"):
+            if (nextGameInfo['homeTeamName'][:5].startswith("Depor")): homeTeam = "Alaves"
+            if (nextGameInfo['awayTeamName'][:5].startswith("Depor")): awayTeam = "Alaves"
 
         matchDate = nextGameInfo['date'][10]
         matchDateInt = nextGameInfo['date'][2:4]+nextGameInfo['date'][5:7]+nextGameInfo['date'][8:10]
