@@ -46,7 +46,7 @@ def extractFromWebSite(leagueId, season, db):
         columns += ","+columnsList[nb]
 
     #Get historic data for last 3 seasons
-    for x in range(0, 3):
+    for x in range(0, 1):
 
         seasonRawData = str(int(season[2:4])-x)+str(int(season[2:4])-x+1)
         url = website+"/"+seasonRawData+"/"+leagueId+".csv"
@@ -232,13 +232,14 @@ def createDataModelTable(db, deepLimit, firstDateMatch):
         ExtDraw INTEGER,
         ExtGoal INTEGER,
         Result CHAR,
-        Bet INTEGER
+        Bet INTEGER,
+        DateInt DATE
         )
     ''')
 
     # We don't use the first 5 games (date format is AAMMDD)
     query = '''
-        SELECT MatchDate, DateInt, HomeTeam, AwayTeam, FTR, Bet
+        SELECT MatchDate, DateInt, HomeTeam, AwayTeam, FTR, Bet, DateInt
         FROM MATCHS
         WHERE '''+inter1+''' OR '''+inter2+''' OR '''+inter3+''' ORDER BY DateInt'''
     cur.execute(query)
@@ -295,8 +296,9 @@ def createDataModelTable(db, deepLimit, firstDateMatch):
             ExtDraw,
             ExtGoal,
             Result,
-            Bet)
-        VALUES(?,?,?,?,?,?,?,?,?,?)
+            Bet,
+            DateInt)
+        VALUES(?,?,?,?,?,?,?,?,?,?,?)
         ''',
         (nbHomeVictory/countHome,
         nbHomeDefeat/countHome,
@@ -307,7 +309,8 @@ def createDataModelTable(db, deepLimit, firstDateMatch):
         nbExtDraw/countExt,
         nbExtGoal/countExt,
         match[4],
-        match[5], ))
+        match[5],
+        match[6], ))
         conn.commit()
         #print nbHomeVictory/countHome, nbHomeDefeat/countHome, nbHomeDraw/countHome, nbHomeGoal/countHome, nbExtVictory/countExt, nbExtDefeat/countExt, nbExtDraw/countExt, nbExtGoal/countExt, match[4], match[5]
 
@@ -352,11 +355,11 @@ def exportDataModelWithBetToCsv(csvModelOutputPath,db):
     # Print all to csv
     dataModel = open(csvModelOutputPath,'w')
 
-    dataModel.write("HomeVictory,HomeDefeat,HomeDraw,HomeGoal,ExtVictory,ExtDefeat,ExtDraw,ExtGoal,TrueResult,Bet\n")
+    dataModel.write("HomeVictory,HomeDefeat,HomeDraw,HomeGoal,ExtVictory,ExtDefeat,ExtDraw,ExtGoal,Date,TrueResult,Bet\n")
 
     cur.execute('SELECT * FROM PREMATCHS')
     for match in cur.fetchall():
-        line = str(match[0])+','+str(match[1])+','+str(match[2])+','+str(match[3])+','+str(match[4])+','+str(match[5])+','+str(match[6])+','+str(match[7])+','+str(match[8])+','+str(match[9])
+        line = str(match[0])+','+str(match[1])+','+str(match[2])+','+str(match[3])+','+str(match[4])+','+str(match[5])+','+str(match[6])+','+str(match[7])+','+str(match[10])+','+str(match[8])+','+str(match[9])
         #line = str(match[0])+','+str(match[1])+','+str(match[2])+','+str(match[3])+','+str(match[4])+','+str(match[5])+','+str(match[6])+','+str(match[7])
         dataModel.write(line+'\n')
     dataModel.close

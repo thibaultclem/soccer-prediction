@@ -16,11 +16,11 @@ def processLeague(leagueId,leagueApiId,starDate):
     extractFromWebSite(leagueId,season,db)
     createHistoricSeasonTable(db)
     createDataModelTable(db,deepGameLimit,starDate)
-    exportDataModelToCsv(csvDataModel,db)
-    #exportDataModelWithBetToCsv(csvDataModelWithBet,db)
-    createNextMatchTable(season,leagueApiId,db)
-    createDataPredictTable(db, deepGameLimit)
-    exportDataPredictToCsv(csvDataPredict,db)
+    #exportDataModelToCsv(csvDataModel,db)
+    exportDataModelWithBetToCsv(csvDataModelWithBet,db)
+    # createNextMatchTable(season,leagueApiId,db)
+    # createDataPredictTable(db, deepGameLimit)
+    # exportDataPredictToCsv(csvDataPredict,db)
 
 
 # Fench Ligue 1
@@ -34,7 +34,7 @@ processLeague('D1','BL1',"151023")
 # Deutchsland Ligue 2
 processLeague('D2','BL2',"151002")
 # Spain Ligue 1
-#processLeague('SP1','PD',"151030")
+processLeague('SP1','PD',"151030")
 # Spain Ligue 2
 processLeague('SP2','SD',"151024")
 # Italia Ligue 1
@@ -67,11 +67,11 @@ e1StartDate = "150929"
 extractFromWebSite("E1",season,e1db)
 createHistoricSeasonTable(e1db)
 createDataModelTable(e1db,deepGameLimit,e1StartDate)
-exportDataModelToCsv(e1csvDataModel,e1db)
-#exportDataModelWithBetToCsv(e1csvDataModelWithBet,e1db)
-exportTeamsToCSV(e1Teams,e1db)
-createDataPredictTable(e1db, deepGameLimit)
-exportDataPredictToCsv(e1csvDataPredict,e1db)
+# exportDataModelToCsv(e1csvDataModel,e1db)
+exportDataModelWithBetToCsv(e1csvDataModelWithBet,e1db)
+# exportTeamsToCSV(e1Teams,e1db)
+# createDataPredictTable(e1db, deepGameLimit)
+# exportDataPredictToCsv(e1csvDataPredict,e1db)
 
 # Italia Ligue 2
 i2db = "./data/db/i2.sqlite"
@@ -86,11 +86,11 @@ i2StartDate = "151026"
 extractFromWebSite("I2",season,i2db)
 createHistoricSeasonTable(i2db)
 createDataModelTable(i2db,deepGameLimit,i2StartDate)
-exportDataModelToCsv(i2csvDataModel,i2db)
-#exportDataModelWithBetToCsv(i2csvDataModelWithBet,i2db)
-exportTeamsToCSV(i2Teams,i2db)
-createDataPredictTable(i2db, deepGameLimit)
-exportDataPredictToCsv(i2csvDataPredict,i2db)
+# exportDataModelToCsv(i2csvDataModel,i2db)
+exportDataModelWithBetToCsv(i2csvDataModelWithBet,i2db)
+# exportTeamsToCSV(i2Teams,i2db)
+# createDataPredictTable(i2db, deepGameLimit)
+# exportDataPredictToCsv(i2csvDataPredict,i2db)
 
 
 # Some league need manual enter for next match because not available online:
