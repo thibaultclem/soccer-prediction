@@ -46,7 +46,7 @@ def extractFromWebSite(leagueId, season, db):
         columns += ","+columnsList[nb]
 
     #Get historic data for last 3 seasons
-    for x in range(0, 1):
+    for x in range(0, 3):
 
         seasonRawData = str(int(season[2:4])-x)+str(int(season[2:4])-x+1)
         url = website+"/"+seasonRawData+"/"+leagueId+".csv"
