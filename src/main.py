@@ -2,7 +2,7 @@ from soccerPrediction import *
 
 # To modify if needed
 deepGameLimit = 5
-season = "2015"
+season = "2016"
 
 
 def processLeague(leagueId,leagueApiId,starDate):
@@ -16,7 +16,7 @@ def processLeague(leagueId,leagueApiId,starDate):
     extractFromWebSite(leagueId,season,db)
     createHistoricSeasonTable(db)
     createDataModelTable(db,deepGameLimit,starDate)
-    #exportDataModelToCsv(csvDataModel,db)
+    exportDataModelToCsv(csvDataModel,db)
     exportDataModelWithBetToCsv(csvDataModelWithBet,db)
     # createNextMatchTable(season,leagueApiId,db)
     # createDataPredictTable(db, deepGameLimit)
